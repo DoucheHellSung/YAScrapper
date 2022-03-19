@@ -18,7 +18,7 @@ namespace YAScrapper
 {
     public class Plugin : BasePlugin<PluginConfiguration> , IHasWebPages
     {
-        public Plugin(IApplicationPaths applicationPaths, IXmlSerializer xmlSerializer , IHttpClient http, ILogManager logger , HtmlAgilityPack.HtmlWeb htmAgl) : base(applicationPaths, xmlSerializer)
+        public Plugin(IApplicationPaths applicationPaths, IXmlSerializer xmlSerializer , IHttpClient http, ILogManager logger) : base(applicationPaths, xmlSerializer)
         {
             Instance = this;
 

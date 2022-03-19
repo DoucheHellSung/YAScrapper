@@ -4,7 +4,7 @@
     <title>YAScrapper</title>
 </head>
 <body>
-    <div data-role="page" data-require="emby-button,emby-select,emby-checkbox,emby-linkbutton">
+    <div data-role="page" class="yaconfiguration" data-require="emby-button,emby-select,emby-checkbox,emby-linkbutton">
         <div data-role="content">
             <div class="content-primary">
                 <h1>Yet Another Scrapper</h1>
@@ -12,8 +12,26 @@
             </div>
 
             <script type="text/javascript">
+                (function () {
 
+                    var pluginId = "EF3B097A-C1A7-457E-BC96-DE916C16D568";
 
+                    $('.yaconfiguration').on('pageshow', function (event) {
+
+                        var page = this;
+
+                        Dashboard.showLoadingMsg();
+
+                        ApiClient.getPluginConfiguration(pluginId).then(function (config) {
+
+                           
+                            Dashboard.hideLoadingMsg();
+                        });
+                    });
+
+                  
+
+                })();
             </script>
         </div>
 </body>
