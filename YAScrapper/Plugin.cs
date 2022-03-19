@@ -6,11 +6,19 @@ using MediaBrowser.Common.Configuration;
 using MediaBrowser.Model.Plugins;
 using MediaBrowser.Model.Serialization;
 using YAScrapper.Configuration;
+using HtmlAgilityPack;
+
+using MediaBrowser.Common.Net;
+using MediaBrowser.Model.Logging;
+
+
+
+
 namespace YAScrapper
 {
     public class Plugin : BasePlugin<PluginConfiguration> , IHasWebPages
     {
-        public Plugin(IApplicationPaths applicationPaths, IXmlSerializer xmlSerializer) : base(applicationPaths, xmlSerializer)
+        public Plugin(IApplicationPaths applicationPaths, IXmlSerializer xmlSerializer , IHttpClient http, ILogManager logger , HtmlAgilityPack.HtmlWeb htmAgl) : base(applicationPaths, xmlSerializer)
         {
             Instance = this;
 
@@ -18,48 +26,28 @@ namespace YAScrapper
         
 
 
-        public static string PluginName = "YAScrapper";
+       
+   
+
+
+        public static IHttpClient Http { get; set; }
+
+        public static ILogger Log { get; set; }
+
+        public static Plugin Instance { get; private set; }
+
+        public override string Name => "YAScrapper";
+
+        public override Guid Id => Guid.Parse("EF3B097A-C1A7-457E-BC96-DE916C16D568");
+
         public IEnumerable<PluginPageInfo> GetPages()
-        {
-            return new[]
+            => new[]
             {
                 new PluginPageInfo
                 {
-                    Name = "YAScrapper",
-                    EmbeddedResourcePath = $"{this.GetType().Namespace}.Configuration.configPage.html"
-                }
+                    Name = this.Name,
+                    EmbeddedResourcePath = $"{this.GetType().Namespace}.Configuration.configPage.html",
+                },
             };
-        }
-        private Guid _id = new Guid("EF3B097A-C1A7-457E-BC96-DE916C16D568");
-        public override Guid Id
-        {
-            get { return _id; }
-        }
-
-
-       
-        /// <summary>
-        /// Gets the name of the plugin
-        /// </summary>
-        /// <value>The name.</value>
-        public override string Name
-        {
-            get { return PluginName; }
-        }
-
-        /// <summary>
-        /// Gets the description.
-        /// </summary>
-        /// <value>The description.</value>
-        public override string Description
-        {
-            get
-            {
-                return "Plugin to crawl websites.";
-            }
-        }
-
-        // public string PluginName { get; private set; }
-        public static Plugin Instance { get; private set; }
     }
 }
