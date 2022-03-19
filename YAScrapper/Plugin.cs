@@ -8,7 +8,7 @@ using MediaBrowser.Model.Serialization;
 using YAScrapper.Configuration;
 namespace YAScrapper
 {
-    internal class Plugin : BasePlugin<PluginConfiguration>
+    public class Plugin : BasePlugin<PluginConfiguration> , IHasWebPages
     {
         public Plugin(IApplicationPaths applicationPaths, IXmlSerializer xmlSerializer) : base(applicationPaths, xmlSerializer)
         {
@@ -26,7 +26,7 @@ namespace YAScrapper
                 new PluginPageInfo
                 {
                     Name = "YAScrapper",
-                    EmbeddedResourcePath = GetType().Namespace + ".Configuration.configPage.html"
+                    EmbeddedResourcePath = $"{this.GetType().Namespace}.Configuration.configPage.html"
                 }
             };
         }
